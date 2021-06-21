@@ -1,5 +1,5 @@
-import { useCallback, useEffect } from "react";
-import Quil from "quill";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Quill from "quill";
 import "quill/dist/quill.snow.css";
 
 const toolbarOptions = [
@@ -21,28 +21,72 @@ const toolbarOptions = [
 
   ["clean"], // remove formatting button
 ];
+let words = document.querySelector(".ql-editor");
+const QuilTextEditor = ({
+  toggle,
+  setWordCount,
+  setCharCount,
+  setSenCount,
+}) => {
+  const [quill, setQuill] = useState();
+  const [text, setText] = useState("");
+  // const wrapperRef = useRef();
 
-const QuilTextEditor = ({ toggle }) => {
-  //   const wrapperRef = useRef();
   let options = {
     theme: "snow",
-    modules: { toolbar: toolbarOptions },
+    modules: {
+      toolbar: toolbarOptions,
+    },
     placeholder: "Write something amazing..",
     readOnly: toggle,
   };
+  const senCount = (sentences) => {
+    // setSenCount(sentences.trim().replace(/\s/g, "").split(".").length - 1);
+    let count = 0;
+    // console.log(sentences.trim().replace(/\s/g, "").split(".").length - 1);
+    let chars = sentences.trim().replace(/\s/g, "").split("");
+    for (let i = 0; i < chars.length; i++) {
+      if (chars[i] === "." || chars[i] === "!" || chars[i] === "?") {
+        count++;
+      }
+    }
+    setSenCount(count);
+    // How do you check for ? and !
+  };
+  const charCount = (string) => {
+    setCharCount(string.replace(/\s/g, "").length);
+  };
+  const countWords = (allWords) => {
+    setWordCount(allWords.trim().split(" ").length);
+  };
+  // const editorRef = useRef(document.querySelector(".ql-editor"));
+  useEffect(() => {
+    if (quill == null) return;
+    const handler = (delta, oldDelta, source) => {
+      if (source !== "user") return;
+      // console.log(delta);
+      // console.log(quill.getText(0));
+      let userWords = quill.getText(0);
+      setText(quill.getText(0));
+      countWords(userWords);
+      charCount(userWords);
+      senCount(userWords);
+      // setWordCount(text.split(" ").length);
+    };
+    quill.on("text-change", handler);
+
+    return () => quill.off("text-change", handler);
+  }, [quill]);
 
   const wrapperRef = useCallback((wrapper) => {
     if (wrapper == null) return;
     wrapper.innerHTML = "";
     const editor = document.createElement("div");
-    wrapper.append(editor);
 
-    new Quil(editor, options);
+    wrapper.append(editor);
+    const q = new Quill(editor, options);
+    setQuill(q);
   }, []);
-  //   useEffect(() => {
-  //     let mainDiv = document.getElementsByClassName("ql-editor");
-  //     mainDiv[0].contentEditable = toggle;
-  //   }, []);
   return <div className="container" ref={wrapperRef}></div>;
 };
 export default QuilTextEditor;

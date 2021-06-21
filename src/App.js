@@ -33,13 +33,21 @@ function App() {
 
   function handleEnter() {
     console.log("Key was pressed ");
+
     setToggle(!toggle);
   }
 
   useKey("Enter", handleEnter); // Shift+ctrl+Enter to open modal
   return (
     <div>
-      <QuilTextEditor toggle={toggle} />
+      <QuilTextEditor
+        toggle={toggle}
+        setCharCount={setCharCount}
+        setWordCount={setWordCount}
+        setSenCount={setSenCount}
+        setParaCount={setParaCount}
+        setBigramsCount={setBigramsCount}
+      />
       {toggle ? (
         <Modal
           toggle={toggle}
