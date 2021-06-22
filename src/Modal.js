@@ -17,7 +17,7 @@ const Modal = ({
         </div>
         <div className="modal-Grid">
           <ul>
-            <li>Character Count:{charCount}</li>
+            <li>Character Count(no spaces):{charCount}</li>
             <li>Word Count:{wordCount}</li>
             <li>Sentence Count:{senCount}</li>
             <li>Paragraph Count:{paraCount}</li>

@@ -27,6 +27,7 @@ const QuilTextEditor = ({
   setWordCount,
   setCharCount,
   setSenCount,
+  setParaCount,
 }) => {
   const [quill, setQuill] = useState();
   const [text, setText] = useState("");
@@ -54,23 +55,42 @@ const QuilTextEditor = ({
     // How do you check for ? and !
   };
   const charCount = (string) => {
+    // setCharCount(string.trim().length);
     setCharCount(string.replace(/\s/g, "").length);
   };
   const countWords = (allWords) => {
     setWordCount(allWords.trim().split(" ").length);
   };
+  const countParagraphs = (allText)=>{
+    let nums = 0;
+    let h = document.querySelectorAll('p')
+    console.log(h.childNodes)
+    // console.log(h.filter(x => x.innerText.length > 0))
+    // console.log(h.filter(x[x] => x.length > 1))
+    let paras = Array.from(h)
+    for ( let i = 0; i < paras.length; i++){
+      let item = h[i];
+      
+      if(item.innerText.length > 1){
+        nums++
+      }
+    }
+    
+    setParaCount(nums)
+  }
   // const editorRef = useRef(document.querySelector(".ql-editor"));
   useEffect(() => {
     if (quill == null) return;
     const handler = (delta, oldDelta, source) => {
       if (source !== "user") return;
-      // console.log(delta);
-      // console.log(quill.getText(0));
+      console.log(delta);
+      console.log(quill.getText(0));
       let userWords = quill.getText(0);
       setText(quill.getText(0));
       countWords(userWords);
       charCount(userWords);
       senCount(userWords);
+      countParagraphs()
       // setWordCount(text.split(" ").length);
     };
     quill.on("text-change", handler);
