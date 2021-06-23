@@ -10,7 +10,10 @@ function useKey(key, cb) {
   });
   useEffect(() => {
     function handle(event) {
-      if (event.key === key) {
+      console.log(event.key )
+      console.log(event.ctrlKey)
+      console.log(event.shiftKey)
+      if (event.key === key && event.ctrlKey === true && event.shiftKey === true) {
         callBackRef.current(event);
       }
     }
@@ -37,7 +40,7 @@ function App() {
     setToggle(!toggle);
   }
 
-  useKey("Enter", handleEnter); // Shift+ctrl+Enter to open modal
+  useKey("C", handleEnter); // Shift+ctrl+Enter to open modal
   return (
     <div>
       <QuilTextEditor
@@ -47,6 +50,7 @@ function App() {
         setSenCount={setSenCount}
         setParaCount={setParaCount}
         setBigramsCount={setBigramsCount}
+        setToggle={setToggle}
       />
       {toggle ? (
         <Modal

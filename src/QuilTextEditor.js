@@ -5,20 +5,20 @@ import "quill/dist/quill.snow.css";
 const toolbarOptions = [
   ["bold", "italic", "underline", "strike"], // toggled buttons
   ["blockquote", "code-block"],
-
+  
   [{ header: 1 }, { header: 2 }], // custom button values
   [{ list: "ordered" }, { list: "bullet" }],
   [{ script: "sub" }, { script: "super" }], // superscript/subscript
   [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
   [{ direction: "rtl" }], // text direction
-
+  
   [{ size: ["small", false, "large", "huge"] }], // custom dropdown
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
-
+  
   [{ color: [] }, { background: [] }], // dropdown with defaults from theme
   [{ font: [] }],
   [{ align: [] }],
-
+  
   ["clean"], // remove formatting button
 ];
 let words = document.querySelector(".ql-editor");
@@ -28,11 +28,14 @@ const QuilTextEditor = ({
   setCharCount,
   setSenCount,
   setParaCount,
+  setBigramsCount,
+  setToggle
 }) => {
   const [quill, setQuill] = useState();
   const [text, setText] = useState("");
   // const wrapperRef = useRef();
 
+  
   let options = {
     theme: "snow",
     modules: {
@@ -42,9 +45,7 @@ const QuilTextEditor = ({
     readOnly: toggle,
   };
   const senCount = (sentences) => {
-    // setSenCount(sentences.trim().replace(/\s/g, "").split(".").length - 1);
     let count = 0;
-    // console.log(sentences.trim().replace(/\s/g, "").split(".").length - 1);
     let chars = sentences.trim().replace(/\s/g, "").split("");
     for (let i = 0; i < chars.length; i++) {
       if (chars[i] === "." || chars[i] === "!" || chars[i] === "?") {
@@ -59,18 +60,15 @@ const QuilTextEditor = ({
     setCharCount(string.replace(/\s/g, "").length);
   };
   const countWords = (allWords) => {
-    setWordCount(allWords.trim().split(" ").length);
+    setWordCount(allWords);
+
   };
   const countParagraphs = (allText)=>{
     let nums = 0;
     let h = document.querySelectorAll('p')
-    console.log(h.childNodes)
-    // console.log(h.filter(x => x.innerText.length > 0))
-    // console.log(h.filter(x[x] => x.length > 1))
     let paras = Array.from(h)
     for ( let i = 0; i < paras.length; i++){
       let item = h[i];
-      
       if(item.innerText.length > 1){
         nums++
       }
@@ -78,20 +76,39 @@ const QuilTextEditor = ({
     
     setParaCount(nums)
   }
+  const bigrams = (allText)=>{
+    let uniquePairs = {};
+    let wordsArr = allText
+      let count = 0 ;
+      let right = 1;
+      for(let i = 0; i < wordsArr.length; i++){
+        let word = wordsArr[i]
+          if(!uniquePairs[`${word} ${wordsArr[right]}`]){
+          uniquePairs[`${word} ${wordsArr[right]}`] = 1 
+            right++
+          }
+      }
+      for( const key in uniquePairs){
+          count++
+      }
+      setBigramsCount(count);
+    
+  }
   // const editorRef = useRef(document.querySelector(".ql-editor"));
   useEffect(() => {
     if (quill == null) return;
     const handler = (delta, oldDelta, source) => {
       if (source !== "user") return;
-      console.log(delta);
-      console.log(quill.getText(0));
+      
       let userWords = quill.getText(0);
       setText(quill.getText(0));
-      countWords(userWords);
+      let words = userWords.trim().replace(/[^\p{L}\p{N}\s]/gu, '').replace(/\n/g, " ").split(" ").length
+      countWords(words);
       charCount(userWords);
       senCount(userWords);
       countParagraphs()
-      // setWordCount(text.split(" ").length);
+      bigrams(userWords)
+      
     };
     quill.on("text-change", handler);
 
@@ -102,11 +119,11 @@ const QuilTextEditor = ({
     if (wrapper == null) return;
     wrapper.innerHTML = "";
     const editor = document.createElement("div");
-
     wrapper.append(editor);
     const q = new Quill(editor, options);
     setQuill(q);
+
   }, []);
-  return <div className="container" ref={wrapperRef}></div>;
+  return <div className="container"  ref={wrapperRef}></div>;
 };
 export default QuilTextEditor;
