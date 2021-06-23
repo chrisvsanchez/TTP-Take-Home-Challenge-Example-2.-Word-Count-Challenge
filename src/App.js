@@ -10,10 +10,8 @@ function useKey(key, cb) {
   });
   useEffect(() => {
     function handle(event) {
-      console.log(event.key )
-      console.log(event.ctrlKey)
-      console.log(event.shiftKey)
       if (event.key === key && event.ctrlKey === true && event.shiftKey === true) {
+  
         callBackRef.current(event);
       }
     }
@@ -35,7 +33,6 @@ function App() {
   }, [toggle]);
 
   function handleEnter() {
-    console.log("Key was pressed ");
 
     setToggle(!toggle);
   }

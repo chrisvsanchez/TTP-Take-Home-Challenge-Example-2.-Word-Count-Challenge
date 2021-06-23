@@ -13,19 +13,24 @@ const Modal = ({
     <div className="modal">
       <div className="modal-content">
         <div className="modal-header">
-          <h4 className="modal-title"> Modal title</h4>
+          <h4 className="modal-title"> Results</h4>
         </div>
         <div className="modal-Grid">
           <ul>
-            <li>Character Count(no spaces):{charCount}</li>
-            <li>Word Count:{wordCount}</li>
-            <li>Sentence Count:{senCount}</li>
-            <li>Paragraph Count:{paraCount}</li>
-            <li>Bigrams:{bigramsCount}</li>
+            <li  className="items">Character Count(no spaces):</li>
+            <li  className="items_2">{charCount}</li>
+            <li className="items">Word Count:</li>
+            <li className="items_2">{wordCount}</li>
+            <li className="items">Sentence Count:</li>
+            <li className="items_2">{senCount}</li>
+            <li className="items">Paragraph Count:</li>
+            <li className="items_2">{paraCount}</li>
+            <li className="items">Bigrams:</li>
+            <li className="items_2">{bigramsCount}</li>
           </ul>
         </div>
         <div className="modal-footer">
-          <button className="button" onClick={() => setToggle(!toggle)}>
+          <button className="close-modal-btn" onClick={() => setToggle(!toggle)}>
             Close
           </button>
         </div>

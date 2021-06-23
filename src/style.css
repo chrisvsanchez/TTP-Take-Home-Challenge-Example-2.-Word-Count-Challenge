@@ -2,13 +2,27 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  
 }
-
+html{
+  font-family: 'Ubuntu', sans-serif;
+}
 body {
-  background-color: rgb(9, 104, 187);
+  background: linear-gradient(115deg, #32ccbc, #90f7ec, #f6416c, #fff6b7, #9f44d3, #e2b0ff, #fdeb71, #f8d800, #abdcff, #0396ff, #feb692, #ea5455);
+  background-size: 2400% 2400%;
+  animation: MoveColors 6s ease infinite;
   margin: 0;
 }
-
+@keyframes MoveColors {
+  0%{background-position:50% 0%}
+  50%{background-position:51% 100%}
+  100%{background-position:50% 0%}
+}
+@-webkit-keyframes MoveColors {
+  0%{background-position:50% 0%}
+  50%{background-position:51% 100%}
+  100%{background-position:50% 0%}
+}
 .container .ql-editor {
   width: 8.5in;
   min-height: 11in;
@@ -49,6 +63,7 @@ body {
   }
 }
 .modal {
+
   position: fixed;
   left: 0;
   top: 0;
@@ -56,22 +71,71 @@ body {
   bottom: 0;
   background-color: rgba(4, 4, 4, 0.591);
   display: flex;
-  align-items: center;
+  align-items: center; 
   justify-content: center;
   text-align: center;
 }
+.modal-title{
+  text-align: center;
+}
+.modal-Grid{
+  /* width: 100%; */
+}
 .modal-Grid ul {
+  flex:1;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
   gap: 8px;
   list-style-type: none;
+  justify-content: space-around;
+  /* width:100%; */
+  margin:0;
+  padding:0 16px ;
+  text-align: left;
+}
+.items{
+  flex: 50% ;
+  align-self: flex-end;
+}
+.item_2{
+  flex:50%;
+  /* align-self: flex-end; */
 }
 .modal-content {
   background-color: white;
   width: 300px;
-  height: 250px;
+  height: auto;
   border-radius: 15%;
   box-shadow: 0 0 0px 0 rgb(255, 255, 255);
+}
+.modal-footer{
+  padding: 10px;
+}
+.close-modal-btn{
+  text-align: center;
+  border-radius: 20px;
+  width: 100px;
+  height: 40px;
+  border: none;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0.4);
+}
+.close-modal-btn:hover {
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0.7);
+  background: linear-gradient(87deg, #e95353a7, #fa3c3cc1, #fb0000);
+  background-size: 600% 600%;
+
+  -webkit-animation: closeModalButton 5s ease infinite;
+  animation: closeModalButton 5s ease infinite;
+
+}
+@-webkit-keyframes closeModalButton {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes closeModalButton {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
