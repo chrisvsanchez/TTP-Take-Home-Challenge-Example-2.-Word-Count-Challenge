@@ -1,4 +1,5 @@
 # TTP Take Home-Challenge Example 2. Word Count Challenge 
+
 ![](TPP.gif)
 ## Description 
 The purpose of this application is to re-create the google docs feature once a user presses <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> to count the number of characters, words, sentences, and unique pairs of words. 
