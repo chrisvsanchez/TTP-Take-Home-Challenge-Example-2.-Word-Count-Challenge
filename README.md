@@ -8,7 +8,7 @@ The purpose of this application is to re-create the google docs feature. Once a 
     [✔️] Sentence Count 
     [✔️] Paragraph Count 
     [✔️] Bigrams (Counts unique Pairs)
-    [Deployed](https://word-counter-challenge.herokuapp.com)
+➡️ [Link to Deployed App](https://word-counter-challenge.herokuapp.com)
 ## Build With 🛠
 ### Frontend 
         * JavaScript using React Library 
