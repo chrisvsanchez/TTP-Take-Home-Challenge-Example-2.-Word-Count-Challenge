@@ -10,26 +10,21 @@ The purpose of this application is to re-create the google docs feature once a u
     [✔️] Bigrams (Counts unique Pairs)
 
 ## Build With 🛠
-* JavaScript using React Library 
-* Styled with custom CSS using FlexBox Layout
-* [Quill API](https://quilljs.com/docs/) 
+### Frontend 
+        * JavaScript using React Library 
+        * Styled with custom CSS using FlexBox Layout
+        * [Quill API](https://quilljs.com/docs/) 
 
 ## Getting Started 
-
+<!-- 
 ### Dependencies
 
-* Application was tested on Google Chrome
+* Application was tested on Google Chrome -->
 
 
-### Installing
+### Installation
+Once the Github repo is downloaded/cloned and open in your local text editor:
+* npm install to update and install dependencies like Quill and etc 
+* npm start to get your local server to open the app in the browser
 
-*
-*
 
-### Executing program
-
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
